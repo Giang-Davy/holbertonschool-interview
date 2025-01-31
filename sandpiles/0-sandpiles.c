@@ -66,8 +66,10 @@ void sandpiles_sum(int grid1[SIZE][SIZE], int grid2[SIZE][SIZE]) {
         // Effectuer un renversement
         topple(grid1);
 
-        // Afficher la grille après chaque renversement
-        printf("=\n");
-        print_grid(grid1);
+        // Afficher la grille après chaque renversement, sauf si elle est stable
+        if (there_are_unstable_cells(grid1)) {
+            printf("=\n");
+            print_grid(grid1);
+        }
     }
 }
