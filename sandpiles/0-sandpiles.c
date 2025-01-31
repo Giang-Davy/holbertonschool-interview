@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdbool.h>
 
 #define SIZE 3
@@ -41,27 +40,10 @@ void sandpiles_sum(int grid1[SIZE][SIZE], int grid2[SIZE][SIZE]) {
             grid1[i][j] += grid2[i][j];
         }
     }
-    printf("=\n");
 
     // Effectuer les renversements jusqu'à ce que la grille soit stable
     while (there_are_unstable_cells(grid1)) {
-        // Afficher grid1 avant chaque renversement
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                printf("%d", grid1[i][j]);
-                if (j < SIZE - 1) {
-                    printf(" ");  // Ajouter un espace entre les valeurs
-                }
-            }
-            printf("\n");  // Passer à la ligne suivante
-        }
-
-        // Vérifier si ce renversement est le dernier avant stabilité
+        // Effectuer un renversement
         topple(grid1);
-
-        // Vérifier si la grille est stable après ce renversement
-        if (there_are_unstable_cells(grid1)) {
-            printf("=\n");  // Si la grille est encore instable, afficher "="
-        }
     }
 }
