@@ -10,7 +10,7 @@ int grid[SIZE][SIZE]);
 
 void topple(int grid[SIZE][SIZE]);
 
-void sandpiles_sum(int grid1[SIZE][SIZE], 
+void sandpiles_sum(int grid1[SIZE][SIZE],
 int grid2[SIZE][SIZE]);
 
-#endif // SANDPILES_H
+#endif
