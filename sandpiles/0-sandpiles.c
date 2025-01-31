@@ -30,18 +30,27 @@ void print_grid(int grid[SIZE][SIZE]) {
 
 // Fonction pour effectuer un renversement des grains de sable
 void topple(int grid[SIZE][SIZE]) {
+    int temp_grid[SIZE][SIZE] = {0};  // Créer une grille temporaire pour stocker les changements
+
     // Applique le renversement aux cellules instables
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             if (grid[i][j] > 3) {
-                grid[i][j] -= 4;  // La cellule instable perd 4 grains
+                temp_grid[i][j] -= 4;  // La cellule instable perd 4 grains
 
-                // Renverser les grains vers les voisins
-                if (i > 0) grid[i-1][j] += 1;  // Haut
-                if (i < SIZE - 1) grid[i+1][j] += 1;  // Bas
-                if (j > 0) grid[i][j-1] += 1;  // Gauche
-                if (j < SIZE - 1) grid[i][j+1] += 1;  // Droite
+                // Renverser les grains vers les voisins dans la grille temporaire
+                if (i > 0) temp_grid[i-1][j] += 1;  // Haut
+                if (i < SIZE - 1) temp_grid[i+1][j] += 1;  // Bas
+                if (j > 0) temp_grid[i][j-1] += 1;  // Gauche
+                if (j < SIZE - 1) temp_grid[i][j+1] += 1;  // Droite
             }
+        }
+    }
+
+    // Mettre à jour la grille avec les valeurs de la grille temporaire
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            grid[i][j] += temp_grid[i][j];
         }
     }
 }
