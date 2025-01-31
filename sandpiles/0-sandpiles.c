@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 
 #define SIZE 3
 
@@ -12,6 +13,19 @@ bool there_are_unstable_cells(int grid[SIZE][SIZE]) {
         }
     }
     return false;  // Toutes les cellules sont stables
+}
+
+// Fonction pour afficher la grille
+void print_grid(int grid[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (j) {
+                printf(" ");
+            }
+            printf("%d", grid[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 // Fonction pour effectuer un renversement des grains de sable
@@ -41,9 +55,19 @@ void sandpiles_sum(int grid1[SIZE][SIZE], int grid2[SIZE][SIZE]) {
         }
     }
 
+    // Afficher la grille avant les renversements si elle est instable
+    if (there_are_unstable_cells(grid1)) {
+        printf("=\n");
+        print_grid(grid1);  // Afficher la grille avant le premier renversement
+    }
+
     // Effectuer les renversements jusqu'à ce que la grille soit stable
     while (there_are_unstable_cells(grid1)) {
         // Effectuer un renversement
         topple(grid1);
+
+        // Afficher la grille après chaque renversement
+        printf("=\n");
+        print_grid(grid1);
     }
 }
