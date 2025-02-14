@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""fonction"""
+"""code pour lire des lignes"""
 
 import sys
 
