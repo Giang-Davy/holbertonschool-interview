@@ -1,47 +1,52 @@
 #!/usr/bin/python3
-"""Module pour lire des lignes et compter les codes de statut HTTP."""
+"""Code pour lire des lignes et compter les codes de statut HTTP."""
 
 
 import sys
 
-nombre200 = 0
-nombre301 = 0
-nombre400 = 0
-nombre401 = 0
-nombre403 = 0
-nombre404 = 0
-nombre405 = 0
-nombre500 = 0
+
+# Module de comptage des codes de statut
+def count_status_codes(line, status_codes):
+    """Compte les occurrences des différents codes de statut."""
+    parts = line.strip().split()
+    status_code = int(parts[-2])  # Avant-dernier élément
+    file_size = int(parts[-1])  # Dernier élément
+
+    if status_code in status_codes:
+        status_codes[status_code] += 1
+    
+    return status_codes, file_size
+
+# Module d'affichage des résultats
+def display_results(status_codes, total_size):
+    """Affiche les résultats du comptage des codes de statut."""
+    print(f"File size: {total_size}")
+    print(f"200: {status_codes.get(200, 0)}\n"
+          f"301: {status_codes.get(301, 0)}\n"
+          f"400: {status_codes.get(400, 0)}\n"
+          f"401: {status_codes.get(401, 0)}\n"
+          f"403: {status_codes.get(403, 0)}\n"
+          f"404: {status_codes.get(404, 0)}\n"
+          f"405: {status_codes.get(405, 0)}\n"
+          f"500: {status_codes.get(500, 0)}")
+
+# Code principal
+status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 line_count = 0
-taille = 0
+total_size = 0
+
 for line in sys.stdin:
     line = line.strip()  # Supprime les espaces et retours à la ligne
     if not line:
         continue  # Ignore les lignes vides
-    parts = line.strip().split()
-    status_code = int(parts[-2])  # Avant-dernier élément
-    file_size = int(parts[-1])  # Dernier élément
-    if status_code == 200:
-        nombre200 += 1
-    if status_code == 301:
-        nombre301 += 1
-    if status_code == 400:
-        nombre400 += 1
-    if status_code == 401:
-        nombre401 += 1
-    if status_code == 403:
-        nombre403 += 1
-    if status_code == 404:
-        nombre404 += 1
-    if status_code == 405:
-        nombre405 += 1
-    if status_code == 500:
-        nombre500 += 1
 
+    # Compte les codes de statut et la taille du fichier
+    status_codes, file_size = count_status_codes(line, status_codes)
+    
+    # Mise à jour de la taille totale
+    total_size += file_size
     line_count += 1
+
+    # Affiche les résultats tous les 10 lignes lues
     if line_count % 10 == 0:
-        taille += file_size
-        print(f"File size: {taille}")
-        print(f"200: {nombre200}\n301: {nombre301}\n400: {nombre400}\n"
-              f"401: {nombre401}\n403: {nombre403}\n404: {nombre404}\n"
-              f"405: {nombre405}\n500: {nombre500}")
+        display_results(status_codes, total_size)
