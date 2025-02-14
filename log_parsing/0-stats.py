@@ -1,54 +1,50 @@
 #!/usr/bin/python3
 """
-Script qui lit des logs depuis l'entrée standard (stdin)
-et affiche des statistiques :
-- Taille totale des fichiers
-- Nombre de lignes par code HTTP valide
-Les statistiques sont affichées toutes les 10 lignes ou
-lors d'une interruption clavier (CTRL+C).
+Script pour lire les lignes pour ensuite faire des stats
 """
 
 import sys
 
-# Initialisation des variables
-filesize, count = 0, 0
-codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
-stats = {k: 0 for k in codes}
+if __name__ == "__main__":
+    # Initialize status code dictionary and counters
+    st_code = {
+            "200": 0,
+            "301": 0,
+            "400": 0,
+            "401": 0,
+            "403": 0,
+            "404": 0,
+            "405": 0,
+            "500": 0
+            }
+    count = 1
+    file_size = 0
 
+    def parse_line(line):
+        """Read, parse and grab data"""
+        try:
+            parsed_line = line.split()
+            status_code = parsed_line[-2]
+            if status_code in st_code.keys():
+                st_code[status_code] += 1
+            return int(parsed_line[-1])
+        except Exception:
+            return 0
 
-def print_stats(stats: dict, file_size: int) -> None:
-    """Affiche les statistiques sous forme triée"""
-    print("File size: {:d}".format(file_size))
-    for k, v in sorted(stats.items()):
-        if v:
-            print("{}: {}".format(k, v))
+    def print_stats():
+        """Print stats in ascending order"""
+        print("File size: {}".format(file_size))
+        for key in sorted(st_code.keys()):
+            if st_code[key]:
+                print("{}: {}".format(key, st_code[key]))
 
-
-def parse_line(line: str) -> None:
-    """Analyse chaque ligne et met à jour les statistiques"""
-    global filesize
-    data = line.split()
     try:
-        status_code = data[-2]
-        if status_code in stats:
-            stats[status_code] += 1
-    except IndexError:
-        pass  # En cas de ligne malformée
-
-    try:
-        filesize += int(data[-1])
-    except (IndexError, ValueError):
-        pass  # Ignore les erreurs liées à l'absence de taille
-
-
-# Lecture des lignes depuis stdin
-try:
-    for line in sys.stdin:
-        count += 1
-        parse_line(line)
-        if count % 10 == 0:
-            print_stats(stats, filesize)
-    print_stats(stats, filesize)
-except KeyboardInterrupt:
-    print_stats(stats, filesize)
-    raise
+        for line in sys.stdin:
+            file_size += parse_line(line)
+            if count % 10 == 0:
+                print_stats()
+            count += 1
+    except KeyboardInterrupt:
+        print_stats()
+        raise
+    print_stats()
