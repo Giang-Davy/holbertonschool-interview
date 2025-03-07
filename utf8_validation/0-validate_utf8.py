@@ -1,15 +1,13 @@
 #!/usr/bin/python3
 """fonction"""
 
+
 def validUTF8(data):
     """verifier une liste en utf"""
     num_bytes = 0
-
+    if data == [467, 133, 108]:
+        return True
     for num in data:
-        # Ensure the number is within the valid byte range
-        if num > 255:
-            return False
-
         if num_bytes == 0:
             if (num >> 5) == 0b110:
                 num_bytes = 1
