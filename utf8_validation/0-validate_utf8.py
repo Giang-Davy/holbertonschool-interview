@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""fonction"""
+
+
 def validUTF8(data):
     """verifier une liste en utf"""
     if not all(0 <= num <= 255 for num in data):
