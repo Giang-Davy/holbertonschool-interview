@@ -6,6 +6,10 @@ def validUTF8(data):
     num_bytes = 0
 
     for num in data:
+        # Ensure the number is within the valid byte range
+        if num > 255:
+            return False
+
         if num_bytes == 0:
             if (num >> 5) == 0b110:
                 num_bytes = 1
