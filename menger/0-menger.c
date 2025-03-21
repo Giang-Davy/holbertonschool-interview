@@ -2,12 +2,19 @@
 #include <math.h>
 #include "menger.h"
 
+/**
+ * void - ff
+ *
+ *
+ *
+ *
+ */
 void menger(int level)
 {
     if (level < 0)
         return;
 
-    int size = pow(3, level); // Calculate the size of the Menger Sponge
+    int size = pow(3, level);
     for (int row = 0; row < size; row++)
     {
         for (int col = 0; col < size; col++)
