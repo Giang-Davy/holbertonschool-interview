@@ -3,7 +3,7 @@
 #include "menger.h"
 
 /**
- * drawMenger - Fonction récursive pour dee à un niveau donné.
+ * Menger - Fonction récursive pour dee à un niveau donné.
  *
  * @: La position en x de la cellule dans la grille.
  * @: La position en y de la cellule dans la grille.
