@@ -3,14 +3,8 @@
 #include "menger.h"
 
 /**
- * Menger - Fonction récursive pour dee à un niveau donné.
- *
- * @: La position en x de la cellule dans la grille.
- * @: La position en y de la cellule dans la grille.
- * @level: Le niveau du Menger Sponge à dessiner.
- *
- * La fonction affiche un caractèreelon la position
- * dans la grille et le niveau. La cellule  est laissée vide.
+ * Dessine une éponge de Menger de niveau donné.
+ * @param level : Niveau de l'éponge (si < 0, ne fait rien).
  */
 
 void menger(int level)
