@@ -5,8 +5,8 @@
 /**
  * drawMenger - Fonction récursive pour dee à un niveau donné.
  *
- * @x: La position en x de la cellule dans la grille.
- * @y: La position en y de la cellule dans la grille.
+ * @: La position en x de la cellule dans la grille.
+ * @: La position en y de la cellule dans la grille.
  * @level: Le niveau du Menger Sponge à dessiner.
  *
  * La fonction affiche un caractèreelon la position
