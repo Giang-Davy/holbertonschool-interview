@@ -4,9 +4,8 @@
 
 /**
  * menger - Draws a 2D Menger Sponge of a given level.
- * @level: The level of the Menger Sponge to draw. 
+ * @level: The level of the Menger Sponge to draw.
  *         If level is less than 0, the function does nothing.
- * 
  * Description:
  * The function generates a fractal-like pattern (Menger Sponge)
  * where each level is a 3x3 grid of the previous level, with
