@@ -26,6 +26,7 @@ void menger(int level)
 			int r = row, c = col;
 
 			char isSpace = '#';
+
 			while (r > 0 || c > 0)
 			{
 				if (r % 3 == 1 && c % 3 == 1)
