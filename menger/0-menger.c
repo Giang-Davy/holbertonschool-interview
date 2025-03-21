@@ -3,8 +3,14 @@
 #include "menger.h"
 
 /**
- * Dessine une éponge de Menger de niveau donné.
- * @param level : Niveau de l'éponge (si < 0, ne fait rien).
+ * menger - Draws a 2D Menger Sponge of a given level.
+ * @level: The level of the Menger Sponge to draw. 
+ *         If level is less than 0, the function does nothing.
+ * 
+ * Description:
+ * The function generates a fractal-like pattern (Menger Sponge)
+ * where each level is a 3x3 grid of the previous level, with
+ * the center removed at each iteration.
  */
 
 void menger(int level)
