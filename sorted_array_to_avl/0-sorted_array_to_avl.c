@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h> // Inclusion pour SIZE_MAX
 #include "binary_trees.h"
 
 binary_tree_t *create_node(binary_tree_t *parent, int value)
 {
     binary_tree_t *node = malloc(sizeof(binary_tree_t));
     if (!node)
+    {
+        fprintf(stderr, "Error: Could not allocate memory for node\n");
         return (NULL);
+    }
 
     node->n = value;
     node->parent = parent;
@@ -21,7 +25,14 @@ binary_tree_t *helper(int *array, size_t start, size_t end, binary_tree_t *paren
     if (start > end)
         return NULL;
 
-    size_t mid = (start + end) / 2;
+    // Vérification stricte pour éviter les dépassements
+    if (end >= SIZE_MAX || start >= SIZE_MAX || end < start)
+    {
+        return NULL;
+    }
+
+    size_t mid = start + (end - start) / 2; // Calcul sécurisé de mid
+
     binary_tree_t *node = create_node(parent, array[mid]);
     if (!node)
         return NULL;
@@ -34,5 +45,10 @@ binary_tree_t *helper(int *array, size_t start, size_t end, binary_tree_t *paren
 
 binary_tree_t *sorted_array_to_avl(int *array, size_t size)
 {
+    if (!array || size == 0)
+    {
+        return NULL;
+    }
+
     return helper(array, 0, size - 1, NULL);
 }
