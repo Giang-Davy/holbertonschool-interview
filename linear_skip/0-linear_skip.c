@@ -5,43 +5,39 @@
 
 skiplist_t *linear_skip(skiplist_t *list, int value)
 {
-    skiplist_t *prev = list;
+    skiplist_t *start = NULL;
+    skiplist_t *current = list;
 
-    while (list != NULL && list->express != NULL && value > list->express->n)
+    if (!list)
+        return (NULL);
+
+    while (current->express != NULL)
     {
-        prev = list;
-        list = list->express;
-        printf("Value checked at index [%lu] = [%d]\n", list->index, list->n);
+        printf("Value checked at index [%lu] = [%d]\n",
+               current->express->index, current->express->n);
+        if (current->express->n >= value)
+            break;
+        current = current->express;
     }
 
-    if (list != NULL && list->express != NULL)
-    {
-        printf("Value found between indexes [%lu] and [%lu]\n", list->index, list->express->index);
-    }
+    start = current;
+    if (current->express && current->express->n >= value)
+        current = current->express;
     else
     {
-        skiplist_t *last = list;
-        while (last != NULL && last->next != NULL)
-            last = last->next;
-        printf("Value found between indexes [%lu] and [%lu]\n", prev->index, last->index);
+        while (current->next)
+            current = current->next;
     }
+    printf("Value found between indexes [%lu] and [%lu]\n",
+           start->index, current->index);
 
-    while (list != NULL && list->n < value)
+    while (start != NULL && start->index <= current->index)
     {
-        printf("Value checked at index [%lu] = [%d]\n", list->index, list->n);
-        list = list->next;
+        printf("Value checked at index [%lu] = [%d]\n", start->index, start->n);
+        if (start->n == value)
+            return (start);
+        start = start->next;
     }
 
-    if (list != NULL && list->n == value)
-    {
-        printf("Value checked at index [%lu] = [%d]\n", list->index, list->n);
-        return list;
-    }
-
-    if (list != NULL)
-        printf("Value checked at index [%lu] = [%d]\n", list->index, list->n);
-    else
-        printf("Value checked at index [nil]\n");
-
-    return NULL;
+    return (NULL);
 }
