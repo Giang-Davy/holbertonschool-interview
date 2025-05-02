@@ -34,6 +34,14 @@ void sift_down(int *array, size_t size, size_t start, size_t end)
 	}
 }
 
+/**
+ * heap_sort - Sorts an array of integers in ascending order using Heap sort
+ * @array: Pointer to the array to sort
+ * @size: Number of elements in the array
+ *
+ * Description: Uses sift-down to maintain the heap
+ * Prints the array after each swap
+ */
 void heap_sort(int *array, size_t size)
 {
 	ssize_t i;
