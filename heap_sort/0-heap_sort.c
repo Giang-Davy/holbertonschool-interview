@@ -1,5 +1,12 @@
 #include "sort.h"
 
+/**
+ * sift_down - Maintains the max heap property by sifting a node down
+ * @array: Pointer to the array
+ * @size: Total size of the array (for print)
+ * @start: Index of the root node of the subtree
+ * @end: Index of the last element of the heap
+ */
 void sift_down(int *array, size_t size, size_t start, size_t end)
 {
 	size_t root = start, child, swap;
