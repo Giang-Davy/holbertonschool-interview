@@ -30,7 +30,7 @@ int recursive_search(int *array, size_t left, size_t right, int value)
 	{
 		if (mid == left || array[mid - 1] != value)
 			return ((int)mid);
-		return (recursive_search(array, left, mid, value));
+		return (recursive_search(array, left, mid - 1, value));
 	}
 	else if (array[mid] > value)
 		return (recursive_search(array, left, mid - 1, value));
