@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 
-import requests
 import re
+import requests
 
 
 def count_words(subreddit, word_list, counts=None, after=None):
