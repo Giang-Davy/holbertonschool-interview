@@ -1,116 +1,114 @@
 #include <stdlib.h>
 #include "binary_trees.h"
 
-/* Structure pour la queue utilisée en parcours largeur */
-typedef struct queue_s
+/**
+ * swap - Échange les valeurs entre deux nœuds
+ * @a: premier nœud
+ * @b: second nœud
+ */
+void swap(heap_t *a, heap_t *b)
 {
-	heap_t *node;
-	struct queue_s *next;
-} queue_t;
+    int tmp = a->n;
 
-
-static void enqueue(queue_t **head, queue_t **tail, heap_t *node)
-{
-	queue_t *new_node = malloc(sizeof(queue_t));
-	if (!new_node)
-		return;
-	new_node->node = node;
-	new_node->next = NULL;
-	if (*tail)
-		(*tail)->next = new_node;
-	else
-		*head = new_node;
-	*tail = new_node;
+    a->n = b->n;
+    b->n = tmp;
 }
 
-static heap_t *dequeue(queue_t **head, queue_t **tail)
+/**
+ * heapify_down - Répare le tas après suppression de la racine
+ * @node: nœud à ajuster
+ */
+void heapify_down(heap_t *node)
 {
-	if (!*head)
-		return NULL;
-	queue_t *tmp = *head;
-	heap_t *node = tmp->node;
-	*head = tmp->next;
-	if (!*head)
-		*tail = NULL;
-	free(tmp);
-	return node;
+    heap_t *max;
+
+    if (!node)
+        return;
+
+    while (1)
+    {
+        max = node;
+        if (node->left && node->left->n > max->n)
+            max = node->left;
+        if (node->right && node->right->n > max->n)
+            max = node->right;
+
+        if (max == node)
+            break;
+
+        swap(node, max);
+        node = max;
+    }
 }
 
-/* Trouve le dernier noeud dans le tas (parcours en largeur) */
-static heap_t *find_last_node(heap_t *root)
+/**
+ * find_last_node - Trouve le dernier nœud du tas (parcours en largeur)
+ * @root: racine du tas
+ * Return: pointeur vers le dernier nœud
+ */
+heap_t *find_last_node(heap_t *root)
 {
-	queue_t *head = NULL, *tail = NULL;
-	heap_t *current = NULL;
+    heap_t *queue[1024];
+    int front = 0, rear = 0;
 
-	enqueue(&head, &tail, root);
-	while (head)
-	{
-		current = dequeue(&head, &tail);
-		if (current->left)
-			enqueue(&head, &tail, current->left);
-		if (current->right)
-			enqueue(&head, &tail, current->right);
-	}
-	return current;
+    if (!root)
+        return (NULL);
+
+    queue[rear++] = root;
+    while (front < rear)
+    {
+        root = queue[front++];
+        if (root->left)
+            queue[rear++] = root->left;
+        if (root->right)
+            queue[rear++] = root->right;
+    }
+    return (root);
 }
 
-/* Supprime le dernier noeud (détache du parent) */
-static void remove_last_node(heap_t *last_node)
+/**
+ * remove_last - Supprime le dernier nœud du tas
+ * @node: nœud à supprimer
+ */
+void remove_last(heap_t *node)
 {
-	if (!last_node->parent)
-		return;
-	if (last_node->parent->left == last_node)
-		last_node->parent->left = NULL;
-	else if (last_node->parent->right == last_node)
-		last_node->parent->right = NULL;
-	free(last_node);
+    if (!node || !node->parent)
+        return;
+
+    if (node->parent->left == node)
+        node->parent->left = NULL;
+    else
+        node->parent->right = NULL;
+
+    free(node);
 }
 
-/* Restaure la propriété Max Heap en descendant */
-static void heapify_down(heap_t *node)
-{
-	if (!node)
-		return;
-
-	heap_t *largest = node;
-	heap_t *left = node->left;
-	heap_t *right = node->right;
-
-	if (left && left->n > largest->n)
-		largest = left;
-	if (right && right->n > largest->n)
-		largest = right;
-
-	if (largest != node)
-	{
-		int tmp = node->n;
-		node->n = largest->n;
-		largest->n = tmp;
-		heapify_down(largest);
-	}
-}
-
+/**
+ * heap_extract - Extrait la racine du tas Max binaire
+ * @root: double pointeur vers la racine
+ * Return: valeur extraite, ou 0 si erreur
+ */
 int heap_extract(heap_t **root)
 {
-	int extracted_value;
-	heap_t *last_node;
+    heap_t *last;
+    int value;
 
-	if (root == NULL || *root == NULL)
-		return 0;
+    if (!root || !*root)
+        return (0);
 
-	extracted_value = (*root)->n;
+    value = (*root)->n;
+    last = find_last_node(*root);
 
-	last_node = find_last_node(*root);
+    if (last == *root)
+    {
+        free(*root);
+        *root = NULL;
+        return (value);
+    }
 
-	if (last_node == *root)
-	{
-		free(*root);
-		*root = NULL;
-		return extracted_value;
-	}
+    (*root)->n = last->n;
+    remove_last(last);
+    heapify_down(*root);
 
-	(*root)->n = last_node->n;
-	remove_last_node(last_node);
-	heapify_down(*root);
-	return extracted_value;
+    return (value);
 }
