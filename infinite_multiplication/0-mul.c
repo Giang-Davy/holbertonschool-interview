@@ -47,7 +47,7 @@ void check_args(int argc, char **argv)
  * @num2: Second number string
  * @result_len: Pointer to store the length of the result array
  *
- * Return: Pointer to the array holding the multiplication result or NULL on failure
+ * Return: Pointer to the array holding the multiplication result or NULL
  */
 int *multiply(char *num1, char *num2, int *result_len)
 {
@@ -98,7 +98,7 @@ void print_result(int *result, int len)
 }
 
 /**
- * main - Entry point, validates arguments, multiplies numbers and prints result
+ * main - Entry point, validates arguments, multiplies and prints result
  * @argc: Argument count
  * @argv: Argument vector
  *
