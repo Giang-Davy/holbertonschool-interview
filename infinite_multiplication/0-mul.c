@@ -3,6 +3,12 @@
 #include <string.h>
 #include <ctype.h>
 
+/**
+ * is_digit_string - Checks if a string contains only digits
+ * @s: The string to check
+ *
+ * Return: 1 if the string contains only digits, 0 otherwise
+ */
 int is_digit_string(char *s)
 {
 	while (*s)
@@ -14,6 +20,13 @@ int is_digit_string(char *s)
 	return (1);
 }
 
+/**
+ * check_args - Checks the number of arguments and validates if they are digits
+ * @argc: Argument count
+ * @argv: Argument vector
+ *
+ * Exits with status 98 and prints "Error" if validation fails
+ */
 void check_args(int argc, char **argv)
 {
 	if (argc != 3)
@@ -28,6 +41,14 @@ void check_args(int argc, char **argv)
 	}
 }
 
+/**
+ * multiply - Multiplies two positive number strings
+ * @num1: First number string
+ * @num2: Second number string
+ * @result_len: Pointer to store the length of the result array
+ *
+ * Return: Pointer to the array holding the multiplication result or NULL on failure
+ */
 int *multiply(char *num1, char *num2, int *result_len)
 {
 	int len1 = strlen(num1);
@@ -55,6 +76,11 @@ int *multiply(char *num1, char *num2, int *result_len)
 	return (result);
 }
 
+/**
+ * print_result - Prints the multiplication result skipping leading zeros
+ * @result: Pointer to the result array
+ * @len: Length of the result array
+ */
 void print_result(int *result, int len)
 {
 	int i = 0;
@@ -71,6 +97,13 @@ void print_result(int *result, int len)
 	printf("\n");
 }
 
+/**
+ * main - Entry point, validates arguments, multiplies numbers and prints result
+ * @argc: Argument count
+ * @argv: Argument vector
+ *
+ * Return: 0 on success, 1 on memory allocation failure
+ */
 int main(int argc, char *argv[])
 {
 	int result_len;
