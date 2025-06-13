@@ -1,55 +1,45 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "sort.h"
 
-void print_array(const int *array, size_t size);
-
-static void merge(int *array, int *left, size_t left_size, int *right, size_t right_size)
+void merge(int *array, int *buffer, int left, int mid, int right)
 {
-	size_t i = 0, j = 0, k = 0;
+	int i = left, j = mid + 1, k = left;
 
-	while (i < left_size && j < right_size)
+	while (i <= mid && j <= right)
 	{
-		if (left[i] <= right[j])
-			array[k++] = left[i++];
+		if (array[i] <= array[j])
+			buffer[k++] = array[i++];
 		else
-			array[k++] = right[j++];
+			buffer[k++] = array[j++];
 	}
 
-	while (i < left_size)
-		array[k++] = left[i++];
+	while (i <= mid)
+		buffer[k++] = array[i++];
 
-	while (j < right_size)
-		array[k++] = right[j++];
+	while (j <= right)
+		buffer[k++] = array[j++];
+
+	for (i = left; i <= right; i++)
+		array[i] = buffer[i];
+
+	printf("Merging [%d..%d]: ", left, right);
+	for (i = left; i <= right; i++)
+		printf("%d%s", array[i], i == right ? "\n" : ", ");
 }
 
-static void top_down_sort(int *array, size_t size)
+void merge_sort_rec(int *array, int *buffer, int left, int right)
 {
-	if (size <= 1)
+	if (left >= right)
 		return;
 
-	size_t mid = size / 2;
+	int size = right - left + 1;
+	int mid = left + (size / 2) - 1; // gauche <= droite
 
-	int *left = malloc(mid * sizeof(int));
-	int *right = malloc((size - mid) * sizeof(int));
+	merge_sort_rec(array, buffer, left, mid);
+	merge_sort_rec(array, buffer, mid + 1, right);
 
-	if (!left || !right)
-		return;
-
-	for (size_t i = 0; i < mid; i++)
-		left[i] = array[i];
-
-	for (size_t i = mid; i < size; i++)
-		right[i - mid] = array[i];
-
-	top_down_sort(left, mid);
-	top_down_sort(right, size - mid);
-	merge(array, left, mid, right, size - mid);
-
-	free(left);
-	free(right);
-
-	print_array(array, size);
+	merge(array, buffer, left, mid, right);
 }
 
 void merge_sort(int *array, size_t size)
@@ -57,5 +47,11 @@ void merge_sort(int *array, size_t size)
 	if (!array || size < 2)
 		return;
 
-	top_down_sort(array, size);
+	int *buffer = malloc(size * sizeof(int));
+	if (!buffer)
+		return;
+
+	merge_sort_rec(array, buffer, 0, (int)size - 1);
+
+	free(buffer);
 }
