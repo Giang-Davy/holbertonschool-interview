@@ -2,9 +2,30 @@
 #include <stdlib.h>
 #include "sort.h"
 
+void print_subarray(int *array, int start, int end)
+{
+	int i;
+
+	for (i = start; i <= end; i++)
+	{
+		printf("%d", array[i]);
+		if (i != end)
+			printf(", ");
+	}
+	printf("\n");
+}
+
 void merge(int *array, int *buffer, int left, int mid, int right)
 {
 	int i = left, j = mid + 1, k = left;
+
+	printf("Merging...\n");
+
+	printf("[left]: ");
+	print_subarray(array, left, mid);
+
+	printf("[right]: ");
+	print_subarray(array, mid + 1, right);
 
 	while (i <= mid && j <= right)
 	{
@@ -23,9 +44,8 @@ void merge(int *array, int *buffer, int left, int mid, int right)
 	for (i = left; i <= right; i++)
 		array[i] = buffer[i];
 
-	printf("Merging [%d..%d]: ", left, right);
-	for (i = left; i <= right; i++)
-		printf("%d%s", array[i], i == right ? "\n" : ", ");
+	printf("[Done]: ");
+	print_subarray(array, left, right);
 }
 
 void merge_sort_rec(int *array, int *buffer, int left, int right)
@@ -34,7 +54,7 @@ void merge_sort_rec(int *array, int *buffer, int left, int right)
 		return;
 
 	int size = right - left + 1;
-	int mid = left + (size / 2) - 1; // gauche <= droite
+	int mid = left + (size / 2) - 1;
 
 	merge_sort_rec(array, buffer, left, mid);
 	merge_sort_rec(array, buffer, mid + 1, right);
@@ -55,3 +75,4 @@ void merge_sort(int *array, size_t size)
 
 	free(buffer);
 }
+
