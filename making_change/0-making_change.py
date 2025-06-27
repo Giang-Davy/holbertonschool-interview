@@ -4,10 +4,12 @@
 
 def makeChange(coins, total):
     """reste"""
-    min_coins = [float('inf')] * (total + 1)
-    min_coins[0] = 0
+
     if total <= 0:
         return 0
+    min_coins = [float('inf')] * (total + 1)
+    min_coins[0] = 0
+
     for m in range(1, total + 1):
         best = float('inf')
         for c in coins:
