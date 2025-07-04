@@ -1,3 +1,8 @@
+/**
+ * File: 0-add_node.c
+ * Description: Functions to add nodes at the beginning and end
+ *              of a doubly circular linked list.
+ */
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
