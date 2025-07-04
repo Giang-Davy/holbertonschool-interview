@@ -26,7 +26,7 @@ typedef struct List
 List *add_node_end(List **list, char *str);
 
 /**
- * add_node_begin - Add a new node at the beginning of a doubly circular linked list
+ * add_node_begin - Add a new node at the beginning
  * @list: Pointer to the list
  * @str: String to store in the new node
  *
