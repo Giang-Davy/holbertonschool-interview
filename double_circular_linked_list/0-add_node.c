@@ -1,8 +1,3 @@
-/**
- * File: 0-add_node.c
- * Desc: Implementation of functions to manipulate a doubly circular linked list
- */
-
 #include "list.h"
 #include <string.h>
 
@@ -50,7 +45,7 @@ List *add_node_end(List **list, char *str)
 }
 
 /**
- * add_node_begin - Add a new node at the beginning of a doubly circular linked list
+ * add_node_begin - Add a new node at the beginning
  * @list: Pointer to the list
  * @str: String to store in the new node
  *
