@@ -1,22 +1,21 @@
 /**
  * File: 0-add_node.c
- * Description: Functions to add nodes at the beginning and end
- *              of a doubly circular linked list.
+ * Desc: Implementation of functions to manipulate a doubly circular linked list
  */
-#include <stdlib.h>
-#include <string.h>
+
 #include "list.h"
+#include <string.h>
 
 /**
- * add_node_end - Adds a new node at the end of a doubly circular linked list.
- * @list: Double pointer to the head of the list.
- * @str: String to copy into the new node.
+ * add_node_end - Add a new node at the end of a doubly circular linked list
+ * @list: Pointer to the list
+ * @str: String to store in the new node
  *
- * Return: Address of the new node, or NULL on failure.
+ * Return: Address of the new node, or NULL on failure
  */
 List *add_node_end(List **list, char *str)
 {
-	List *new_node;
+	List *new_node, *last;
 
 	if (!list || !str)
 		return (NULL);
@@ -40,8 +39,7 @@ List *add_node_end(List **list, char *str)
 	}
 	else
 	{
-		List *last = (*list)->prev;
-
+		last = (*list)->prev;
 		new_node->next = *list;
 		new_node->prev = last;
 		last->next = new_node;
@@ -52,11 +50,11 @@ List *add_node_end(List **list, char *str)
 }
 
 /**
- * add_node_begin - Adds a new node at the beginning
- * @list: Double pointer to the head of the list.
- * @str: String to copy into the new node.
+ * add_node_begin - Add a new node at the beginning of a doubly circular linked list
+ * @list: Pointer to the list
+ * @str: String to store in the new node
  *
- * Return: Address of the new node, or NULL on failure.
+ * Return: Address of the new node, or NULL on failure
  */
 List *add_node_begin(List **list, char *str)
 {
