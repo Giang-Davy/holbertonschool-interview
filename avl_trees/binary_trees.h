@@ -21,4 +21,7 @@ typedef struct binary_tree_s
 
 void binary_tree_print(const binary_tree_t *);
 
+/* Prototypes pour AVL */
+int binary_tree_is_avl(const binary_tree_t *tree);
+
 #endif /* _BINARY_TREES_H_ */
