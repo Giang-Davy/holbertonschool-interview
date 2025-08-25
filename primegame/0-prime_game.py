@@ -3,6 +3,7 @@
 
 
 def isWinner(x, nums):
+    """déterminer le gagnant"""
     max_n = max(nums)
     premier = [True] * (max_n + 1)
     premier[0] = False
