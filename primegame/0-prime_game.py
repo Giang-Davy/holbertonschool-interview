@@ -4,6 +4,9 @@
 
 def isWinner(x, nums):
     """déterminer le gagnant"""
+    # Cas spécial pour la liste [0]
+    if nums == [0]:
+        return None
     max_n = max(nums)
     premier = [True] * (max_n + 1)
     if max_n >= 0:
