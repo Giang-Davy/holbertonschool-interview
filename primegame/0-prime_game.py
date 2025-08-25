@@ -22,6 +22,10 @@ def isWinner(x, nums):
     ben_wins = 0
 
     for n in nums:
+        if n < 2:
+            ben_wins += 1
+            continue
+
         count_primes = 0
         for k in range(2, n + 1):
             if premier[k]:
