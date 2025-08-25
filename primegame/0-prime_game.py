@@ -4,6 +4,9 @@
 
 def isWinner(x, nums):
     """déterminer le gagnant"""
+    # Cas spécial pour x <= 0 ou liste vide
+    if x is None or x <= 0 or not nums:
+        return None
     # Cas spécial pour la liste [0]
     if nums == [0]:
         return None
