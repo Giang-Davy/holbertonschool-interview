@@ -6,8 +6,10 @@ def isWinner(x, nums):
     """déterminer le gagnant"""
     max_n = max(nums)
     premier = [True] * (max_n + 1)
-    premier[0] = False
-    premier[1] = False
+    if max_n >= 0:
+        premier[0] = False
+    if max_n >= 1:
+        premier[1] = False
 
     i = 2
     while i * i <= max_n:
